@@ -1,19 +1,19 @@
-class NFA:
+class DFA:
     def __init__(self, words):
         self.words = words        # list of words
         self.states = {}          # dictionary in the form (state, letter) -> state
         self.final_states = {}    # set of final states, associated with the words
         self.all_states = set()   # set of all states
-        self.build_nfa()          # build the NFA
+        self.build_dfa()          # build the DFA
 
-    def build_nfa(self):
+    def build_dfa(self):
         state_id = 1  # Start from 1, because 0 is the universal initial state
         self.all_states.add(0)  # Add the universal initial state
 
         # Transitions for the initial state (s0) that accepts any character (represented by 'w')
         self.states[(0, 'w')] = 0
 
-        # Build the NFA based on the given words
+        # Build the DFA based on the given words
         for word in self.words:
             current_state = 0
             for letter in word:
@@ -83,26 +83,26 @@ def main():
         print("File not found.")
         return
 
-    # Initialize NFA
-    nfa = NFA(words)
+    # Initialize DFA
+    dfa = DFA(words)
 
     # Display the set of states
     # print("\nSet of states:")
-    # print(nfa.all_states)
+    # print(dfa.all_states)
     
     # Display transitions
     print("\nTransitions:")
-    for (state, letter), next_state in nfa.states.items():
+    for (state, letter), next_state in dfa.states.items():
         print(f"(S{state}, '{letter}') -> S{next_state}")
 
     # Display final states
     print("\nFinal states:")
     print('{', end="")
-    for finstate in nfa.final_states:
-        print(f"S{finstate}", end=",") if finstate != list(nfa.final_states)[-1] else print(f"S{finstate}" + '}')
+    for finstate in dfa.final_states:
+        print(f"S{finstate}", end=",") if finstate != list(dfa.final_states)[-1] else print(f"S{finstate}" + '}')
   
-    # Simulate NFA on the string read from the file
-    nfa.simulate_complete(content)
+    # Simulate DFA on the string read from the file
+    dfa.simulate_complete(content)
 
 
 if __name__ == "__main__":
